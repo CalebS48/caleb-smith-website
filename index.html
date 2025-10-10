@@ -18,6 +18,20 @@
             color: #d1d5db;
         }
 
+        #hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
         .glass-effect {
             background: rgba(17, 24, 39, 0.6);
             backdrop-filter: blur(10px);
@@ -101,11 +115,26 @@
         .modal-overlay.visible .modal-content {
             transform: scale(1);
         }
-        #modal-3d-container canvas {
+        #modal-media-container {
+            position: relative;
+        }
+        #modal-media-container canvas {
             display: block;
             width: 100%;
             height: 100%;
             border-radius: 0.5rem;
+        }
+        .three-d-prompt {
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            pointer-events: none;
         }
     </style>
 </head>
@@ -139,17 +168,20 @@
     <main class="container mx-auto px-6 lg:px-20 pt-24 md:pt-32">
 
         <!-- Hero Section -->
-        <section id="hero" class="min-h-[70vh] flex flex-col justify-center scroll-animation">
-            <p class="text-lg accent-color mb-4">Hi, my name is</p>
-            <h1 class="text-4xl md:text-7xl font-bold text-gray-50">Caleb Smith.</h1>
-            <h2 class="text-4xl md:text-7xl font-bold text-gray-400 mt-2">I build things for the real world.</h2>
-            <p class="mt-6 max-w-xl text-gray-400">
-                I'm a Mechanical Engineering student at the University of Central Florida (UCF), with an expected graduation in Fall 2027. As the Social Media Manager for our ASME chapter, I'm passionate about both technical innovation and community engagement.
-            </p>
-            <div class="mt-8">
-                <a href="#gallery" class="accent-bg text-white font-bold py-3 px-8 rounded-md hover:bg-opacity-90 transition-all duration-300 text-lg">
-                    View My Work
-                </a>
+        <section id="hero" class="min-h-[70vh] flex flex-col justify-center scroll-animation relative">
+            <canvas id="hero-canvas"></canvas>
+            <div class="hero-content">
+                <p class="text-lg accent-color mb-4">Hi, my name is</p>
+                <h1 class="text-4xl md:text-7xl font-bold text-gray-50">Caleb Smith.</h1>
+                <h2 class="text-4xl md:text-7xl font-bold text-gray-400 mt-2">I build things for the real world.</h2>
+                <p class="mt-6 max-w-xl text-gray-400">
+                    I'm a Mechanical Engineering student at the University of Central Florida (UCF), with an expected graduation in Fall 2027. As the Social Media Manager for our ASME chapter, I'm passionate about both technical innovation and community engagement.
+                </p>
+                <div class="mt-8">
+                    <a href="#gallery" class="accent-bg text-white font-bold py-3 px-8 rounded-md hover:bg-opacity-90 transition-all duration-300 text-lg">
+                        View My Work
+                    </a>
+                </div>
             </div>
         </section>
         
@@ -181,7 +213,7 @@
                     <div class="w-64 h-64 relative group">
                         <div class="absolute inset-0 bg-gray-700 rounded-md z-0 transform transition-transform duration-300 group-hover:translate-x-2 group-hover:translate-y-2"></div>
                         <div class="absolute inset-0 border-2 accent-border rounded-md z-10 transform transition-transform duration-300 group-hover:-translate-x-2 group-hover:-translate-y-2"></div>
-                        <img src="https://placehold.co/400x400/1e293b/ffffff?text=Caleb" alt="Caleb Smith" class="absolute inset-0 w-full h-full object-cover rounded-md z-0 transition-all duration-300 group-hover:grayscale-0 grayscale">
+                        <img src="image1.png" alt="Caleb Smith" class="absolute inset-0 w-full h-full object-cover rounded-md z-0 transition-all duration-300 group-hover:grayscale-0 grayscale">
                     </div>
                 </div>
             </div>
@@ -195,7 +227,7 @@
                 <div class="glass-effect rounded-lg p-6 flex flex-col justify-between hover:-translate-y-2 transition-transform duration-300 cursor-pointer project-card" data-project-id="orange-race">
                     <div>
                         <div class="flex justify-between items-center mb-4">
-                            <i data-lucide="folder" class="w-10 h-10 accent-color"></i>
+                            <i data-lucide="folder-git-2" class="w-10 h-10 accent-color"></i>
                             <span class="text-xs text-gray-500">UCF</span>
                         </div>
                         <h3 class="text-xl font-bold text-gray-50 mb-2">Great Navel Orange Race</h3>
@@ -204,10 +236,10 @@
                         </p>
                     </div>
                     <div class="flex flex-wrap gap-2 mt-6">
+                        <span class="tech-tag">3D Model</span>
                         <span class="tech-tag">SolidWorks</span>
                         <span class="tech-tag">Fluid Dynamics</span>
                         <span class="tech-tag">Gyroscopes</span>
-                        <span class="tech-tag">RC Control</span>
                     </div>
                 </div>
                 <!-- Project 2 -->
@@ -491,8 +523,7 @@
         const projectDetails = {
             'orange-race': {
                 title: "Great Navel Orange Race",
-                mediaType: 'image',
-                mediaUrl: "https://placehold.co/600x400/1f2937/60a5fa?text=Boat+Hull",
+                mediaType: '3d', // Changed to '3d'
                 description: "This was an extracurricular project at UCF to design and build a remote-controlled boat. My primary role involved designing the hull in SolidWorks and running fluid analysis simulations to ensure positive buoyancy and stability, even in rough water conditions.",
                 challenges: "The main challenge was integrating a functional gyroscope for stabilization within the tight constraints of the hull design. Ensuring the electronics were properly waterproofed while allowing for RC signal reception was also a critical hurdle.",
                 results: "Our team was the first out of 275 to successfully implement a functional gyroscope during the RC testing phase of the project. This innovation contributed to our boat's excellent stability and performance, helping us place within the top 10 of all competitors."
@@ -515,29 +546,63 @@
         let threejs_scene, threejs_camera, threejs_renderer, threejs_controls, threejs_animationFrameId;
 
         function initThreeJS(container) {
+            // Scene setup
             threejs_scene = new THREE.Scene();
             threejs_camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-            threejs_renderer = new THREE.WebGLRenderer({ antialias: true });
+            threejs_renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); // alpha: true for transparent bg
             
             threejs_renderer.setSize(container.clientWidth, container.clientHeight);
+            threejs_renderer.setPixelRatio(window.devicePixelRatio);
             container.appendChild(threejs_renderer.domElement);
 
+            // Controls
             threejs_controls = new OrbitControls(threejs_camera, threejs_renderer.domElement);
             threejs_controls.enableDamping = true;
+            threejs_controls.autoRotate = true;
+            threejs_controls.autoRotateSpeed = 1.0;
 
-            // Simple boat hull model
-            const material = new THREE.MeshStandardMaterial({ color: 0xcccccc });
-            const geometry = new THREE.BoxGeometry(2, 0.5, 1);
+            // Create a stylized boat hull model
+            const material = new THREE.MeshStandardMaterial({ 
+                color: 0x60a5fa, // Accent color
+                metalness: 0.3,
+                roughness: 0.6
+            });
+            const hullShape = new THREE.Shape();
+            hullShape.moveTo(0, 0);
+            hullShape.lineTo(0, 0.8);
+            hullShape.lineTo(1, 1);
+            hullShape.lineTo(3, 1);
+            hullShape.lineTo(4, 0.8);
+            hullShape.lineTo(4, 0);
+            hullShape.lineTo(0, 0);
+
+            const extrudeSettings = {
+                steps: 2,
+                depth: 1.6,
+                bevelEnabled: true,
+                bevelThickness: 0.1,
+                bevelSize: 0.1,
+                bevelOffset: 0,
+                bevelSegments: 1
+            };
+
+            const geometry = new THREE.ExtrudeGeometry(hullShape, extrudeSettings);
+            geometry.center(); // Center the geometry for easier rotation
+            
             const hull = new THREE.Mesh(geometry, material);
+            hull.rotation.x = -Math.PI / 12; // Tilt it slightly
             threejs_scene.add(hull);
 
-            const light = new THREE.DirectionalLight(0xffffff, 1);
-            light.position.set(5, 5, 5).normalize();
-            threejs_scene.add(light);
-            threejs_scene.add(new THREE.AmbientLight(0x404040, 2));
+            // Lighting
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            threejs_scene.add(ambientLight);
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+            directionalLight.position.set(5, 10, 7.5);
+            threejs_scene.add(directionalLight);
 
-            threejs_camera.position.z = 3;
+            threejs_camera.position.z = 3.5;
 
+            // Animation loop
             function animate() {
                 threejs_animationFrameId = requestAnimationFrame(animate);
                 threejs_controls.update();
@@ -545,22 +610,36 @@
             }
             animate();
 
-            window.addEventListener('resize', () => {
+            // Handle window resize
+            const onResize = () => {
                 threejs_camera.aspect = container.clientWidth / container.clientHeight;
                 threejs_camera.updateProjectionMatrix();
                 threejs_renderer.setSize(container.clientWidth, container.clientHeight);
-            });
+            };
+            window.addEventListener('resize', onResize);
+            
+            // Return cleanup function
+            return () => {
+                 window.removeEventListener('resize', onResize);
+            }
         }
         
         function destroyThreeJS() {
              if (threejs_animationFrameId) {
                 cancelAnimationFrame(threejs_animationFrameId);
              }
+             if (threejs_renderer) {
+                threejs_renderer.dispose();
+             }
+             // Nullify all variables to help garbage collection
              threejs_scene = null;
              threejs_camera = null;
              threejs_renderer = null;
              threejs_controls = null;
+             threejs_animationFrameId = null;
         }
+
+        let cleanupThreeJSResize = null;
 
         function openModal(projectId) {
             const details = projectDetails[projectId];
@@ -574,7 +653,12 @@
             mediaContainer.innerHTML = ''; // Clear previous content
 
             if (details.mediaType === '3d') {
-                initThreeJS(mediaContainer);
+                cleanupThreeJSResize = initThreeJS(mediaContainer);
+                const prompt = document.createElement('div');
+                prompt.className = 'three-d-prompt';
+                prompt.textContent = 'Click and drag to explore the model';
+                mediaContainer.appendChild(prompt);
+
             } else {
                 const img = document.createElement('img');
                 img.src = details.mediaUrl;
@@ -590,6 +674,10 @@
 
         function closeModal() {
             projectModal.classList.remove('visible');
+            if (typeof cleanupThreeJSResize === 'function') {
+                cleanupThreeJSResize();
+                cleanupThreeJSResize = null;
+            }
             destroyThreeJS(); // Clean up 3D scene if it exists
             setTimeout(() => {
                 projectModal.classList.add('hidden');
@@ -600,6 +688,118 @@
         projectCards.forEach(card => card.addEventListener('click', () => openModal(card.dataset.projectId)));
         modalCloseBtn.addEventListener('click', closeModal);
         projectModal.addEventListener('click', (e) => { if (e.target === projectModal) closeModal(); });
+
+
+        // ---- Hero Canvas Animation ----
+        const canvas = document.getElementById('hero-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouse = { x: null, y: null, radius: 150 };
+
+        function setCanvasSize() {
+            const heroSection = document.getElementById('hero');
+            canvas.width = heroSection.offsetWidth;
+            canvas.height = heroSection.offsetHeight;
+        }
+
+        window.addEventListener('resize', () => {
+            setCanvasSize();
+            initParticles();
+        });
+        window.addEventListener('mousemove', (event) => {
+            const rect = canvas.getBoundingClientRect();
+            mouse.x = event.clientX - rect.left;
+            mouse.y = event.clientY - rect.top;
+        });
+        window.addEventListener('mouseout', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        class Particle {
+            constructor(x, y, directionX, directionY, size, color) {
+                this.x = x;
+                this.y = y;
+                this.directionX = directionX;
+                this.directionY = directionY;
+                this.size = size;
+                this.color = color;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+            update() {
+                if (this.x > canvas.width || this.x < 0) this.directionX = -this.directionX;
+                if (this.y > canvas.height || this.y < 0) this.directionY = -this.directionY;
+                
+                // Mouse collision
+                let dx = mouse.x - this.x;
+                let dy = mouse.y - this.y;
+                let distance = Math.sqrt(dx * dx + dy * dy);
+                if (distance < mouse.radius + this.size) {
+                    if (mouse.x < this.x && this.x < canvas.width - this.size * 10) this.x += 5;
+                    if (mouse.x > this.x && this.x > this.size * 10) this.x -= 5;
+                    if (mouse.y < this.y && this.y < canvas.height - this.size * 10) this.y += 5;
+                    if (mouse.y > this.y && this.y > this.size * 10) this.y -= 5;
+                }
+                
+                this.x += this.directionX;
+                this.y += this.directionY;
+                this.draw();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            let numberOfParticles = (canvas.height * canvas.width) / 9000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                let size = (Math.random() * 2) + 1;
+                let x = (Math.random() * ((canvas.width - size * 2) - (size * 2)) + size * 2);
+                let y = (Math.random() * ((canvas.height - size * 2) - (size * 2)) + size * 2);
+                let directionX = (Math.random() * .4) - .2;
+                let directionY = (Math.random() * .4) - .2;
+                let color = 'rgba(96, 165, 250, 0.5)';
+                particles.push(new Particle(x, y, directionX, directionY, size, color));
+            }
+        }
+
+        function connect() {
+            let opacityValue = 1;
+            for (let a = 0; a < particles.length; a++) {
+                for (let b = a; b < particles.length; b++) {
+                    let distance = ((particles[a].x - particles[b].x) * (particles[a].x - particles[b].x))
+                                 + ((particles[a].y - particles[b].y) * (particles[a].y - particles[b].y));
+                    if (distance < (canvas.width / 7) * (canvas.height / 7)) {
+                        opacityValue = 1 - (distance / 20000);
+                        ctx.strokeStyle = `rgba(96, 165, 250, ${opacityValue})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[a].x, particles[a].y);
+                        ctx.lineTo(particles[b].x, particles[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+        
+        function animateParticles() {
+            requestAnimationFrame(animateParticles);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+            }
+            connect();
+        }
+
+        // Delay initialization to ensure layout is calculated
+        setTimeout(() => {
+            setCanvasSize();
+            initParticles();
+            animateParticles();
+        }, 100);
 
     </script>
 </body>
