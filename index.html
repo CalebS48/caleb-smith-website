@@ -358,10 +358,10 @@
             <h2 class="section-heading">Resume</h2>
             <div class="max-w-4xl mx-auto text-center">
                 <div class="glass-effect rounded-lg p-4 mb-8 inline-block">
-                     <img src="/Caleb_Smith_Resume-1.png" alt="Caleb Smith's Resume" class="rounded-md shadow-lg w-full">
+                     <img src="https://raw.githubusercontent.com/CalebS48/caleb-smith-website/main/assets/Caleb_Smith_Resume-1.png" alt="Caleb Smith's Resume" class="rounded-md shadow-lg w-full">
                 </div>
                 <br>
-                <a href="Caleb_Smith_Resume.docx.pdf" download class="accent-bg text-white font-bold py-3 px-10 rounded-md hover:bg-opacity-90 transition-all duration-300 text-lg inline-flex items-center gap-2">
+                <a href="https://raw.githubusercontent.com/CalebS48/caleb-smith-website/main/assets/Caleb%20Smith%20Resume.docx.pdf" download class="accent-bg text-white font-bold py-3 px-10 rounded-md hover:bg-opacity-90 transition-all duration-300 text-lg inline-flex items-center gap-2">
                     <i data-lucide="download" class="w-5 h-5"></i>
                     Download PDF
                 </a>
@@ -509,8 +509,8 @@
             'robotic-hand': {
                 title: "Robotic Hand Competition",
                 mediaType: '3d-hand',
-                objUrl: '/assets/robotic-hand.obj', // IMPORTANT: Use a relative path
-                mtlUrl: '/assets/robotic-hand.mtl', // IMPORTANT: Use a relative path
+                objUrl: 'https://raw.githubusercontent.com/CalebS48/caleb-smith-website/main/assets/robotic-hand.obj',
+                mtlUrl: 'https://raw.githubusercontent.com/CalebS48/caleb-smith-website/main/assets/robotic-hand.mtl',
                 description: "For an ASME competition, I engineered a fully operational robotic hand using SolidWorks for design and 3D printing for manufacturing. The project focused on replicating the complex functions of a human hand through mechanical and electrical systems.",
                 challenges: "A key challenge was creating a control system that was both intuitive and precise. We used a system of potentiometers to act as 'tendons,' controlled by fishing line and rubber bands. Calibrating the tension and sensor sensitivity to achieve a firm but controlled grip was a complex process of trial and error.",
                 results: "The final product demonstrated proficiency in mechatronics, successfully integrating mechanical parts with electrical components to achieve successful object manipulation. The hand was able to pick up and manipulate a variety of objects, showcasing the effectiveness of the design."
@@ -611,14 +611,34 @@
                 const objLoader = new OBJLoader();
                 objLoader.setMaterials(materials);
                 objLoader.load(objUrl, (object) => {
-                    // Center and scale the model
                     const box = new THREE.Box3().setFromObject(object);
+                    const size = box.getSize(new THREE.Vector3()).length();
                     const center = box.getCenter(new THREE.Vector3());
-                    object.position.sub(center); // center the model
-                    object.scale.set(0.08, 0.08, 0.08); // Adjust scale as needed
+                    
+                    object.position.x += (object.position.x - center.x);
+                    object.position.y += (object.position.y - center.y);
+                    object.position.z += (object.position.z - center.z);
+                    
+                    threejs_controls.maxDistance = size * 10;
+                    threejs_camera.near = size / 100;
+                    threejs_camera.far = size * 100;
+                    threejs_camera.updateProjectionMatrix();
+                    
+                    threejs_camera.position.copy(center);
+                    threejs_camera.position.x += size / 2.0;
+                    threejs_camera.position.y += size / 5.0;
+                    threejs_camera.position.z += size / 2.0;
+                    threejs_camera.lookAt(center);
+
                     threejs_scene.add(object);
-                });
-            });
+                },
+                (xhr) => { console.log((xhr.loaded / xhr.total * 100) + '% loaded'); },
+                (error) => { console.error('An error happened while loading the OBJ model:', error); }
+                );
+            },
+            (xhr) => { console.log((xhr.loaded / xhr.total * 100) + '% loaded'); },
+            (error) => { console.error('An error happened while loading the MTL file:', error); }
+            );
         }
         
         // --- Modal Opening/Closing ---
