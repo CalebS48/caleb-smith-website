@@ -1,6 +1,3 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -140,7 +137,8 @@
 </head>
 
 <body class="antialiased leading-relaxed">
-    <!-- Header --><header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 glass-effect shadow-md">
+    <!-- Header -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 glass-effect shadow-md">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="#" class="text-2xl font-bold accent-color nav-logo">CS</a>
             <div id="desktop-nav" class="hidden md:flex items-center space-x-8">
@@ -154,7 +152,8 @@
                 <i data-lucide="menu" class="w-6 h-6"></i>
             </button>
         </nav>
-        <!-- Mobile Menu --><div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
             <a href="#about" class="nav-link block py-2 hover:accent-color">About</a>
             <a href="#gallery" class="nav-link block py-2 hover:accent-color">Gallery</a>
             <a href="#experience" class="nav-link block py-2 hover:accent-color">Experience</a>
@@ -165,7 +164,8 @@
 
     <main class="container mx-auto px-6 lg:px-20 pt-24 md:pt-32">
 
-        <!-- Hero Section --><section id="hero" class="min-h-[70vh] flex flex-col justify-center scroll-animation relative">
+        <!-- Hero Section -->
+        <section id="hero" class="min-h-[70vh] flex flex-col justify-center scroll-animation relative">
             <canvas id="hero-canvas"></canvas>
             <div class="hero-content">
                 <p class="text-lg accent-color mb-4">Hi, my name is</p>
@@ -182,7 +182,8 @@
             </div>
         </section>
         
-        <!-- About Section --><section id="about" class="py-24 scroll-animation">
+        <!-- About Section -->
+        <section id="about" class="py-24 scroll-animation">
             <h2 class="section-heading">About Me</h2>
             <div class="grid grid-cols-1 md:grid-cols-5 gap-10">
                 <div class="md:col-span-3 text-gray-400 space-y-4">
@@ -209,16 +210,18 @@
                     <div class="w-64 h-64 relative group">
                         <div class="absolute inset-0 bg-gray-700 rounded-md z-0 transform transition-transform duration-300 group-hover:translate-x-2 group-hover:translate-y-2"></div>
                         <div class="absolute inset-0 border-2 accent-border rounded-md z-10 transform transition-transform duration-300 group-hover:-translate-x-2 group-hover:-translate-y-2"></div>
-                        <img src="https://res.cloudinary.com/dffo9kuhp/image/upload/v1760133557/IMG_7720_bemqsa.jpg" alt="Caleb Smith" class="absolute inset-0 w-full h-full object-cover rounded-md z-0 transition-all duration-300 group-hover:grayscale-0" style="object-position: 50% 25%;">
+                        <img src="https://res.cloudinary.com/dffo9kuhp/image/upload/v1760133557/IMG_7720_bemqsa.jpg" alt="Caleb Smith" class="absolute inset-0 w-full h-full object-cover rounded-md z-0 transition-all duration-300" style="object-position: top;">
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Gallery Section --><section id="gallery" class="py-24 scroll-animation">
+        <!-- Gallery Section -->
+        <section id="gallery" class="py-24 scroll-animation">
             <h2 class="section-heading">Project Gallery</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Project 1 --><div class="glass-effect rounded-lg p-6 flex flex-col justify-between hover:-translate-y-2 transition-transform duration-300 cursor-pointer project-card" data-project-id="orange-race">
+                <!-- Project 1 -->
+                <div class="glass-effect rounded-lg p-6 flex flex-col justify-between hover:-translate-y-2 transition-transform duration-300 cursor-pointer project-card" data-project-id="orange-race">
                     <div>
                         <div class="flex justify-between items-center mb-4">
                             <i data-lucide="folder-git-2" class="w-10 h-10 accent-color"></i>
@@ -226,7 +229,7 @@
                         </div>
                         <h3 class="text-xl font-bold text-gray-50 mb-2">Great Navel Orange Race</h3>
                         <p class="text-gray-400 text-sm">
-                            Designed and fabricated a remote-controlled boat, focusing on hull design in SolidWorks and performing fluid analysis to ensure stability and buoyancy in rough water conditions.
+                            Designed and fabricated a remote-controlled boat, focusing on hull design in SolidWorks and performing fluid analysis to ensure stability and buoyancy.
                         </p>
                     </div>
                     <div class="flex flex-wrap gap-2 mt-6">
@@ -236,31 +239,34 @@
                         <span class="tech-tag">Gyroscopes</span>
                     </div>
                 </div>
-                <!-- Project 2 --><div class="glass-effect rounded-lg p-6 flex flex-col justify-between hover:-translate-y-2 transition-transform duration-300 cursor-pointer project-card" data-project-id="robotic-hand">
+                <!-- Project 2 -->
+                <div class="glass-effect rounded-lg p-6 flex flex-col justify-between hover:-translate-y-2 transition-transform duration-300 cursor-pointer project-card" data-project-id="robotic-hand">
                     <div>
                          <div class="flex justify-between items-center mb-4">
-                            <i data-lucide="folder" class="w-10 h-10 accent-color"></i>
+                            <i data-lucide="folder-git-2" class="w-10 h-10 accent-color"></i>
                             <span class="text-xs text-gray-500">ASME</span>
                         </div>
                         <h3 class="text-xl font-bold text-gray-50 mb-2">Robotic Hand Competition</h3>
                         <p class="text-gray-400 text-sm">
-                            Engineered a fully operational robotic hand, replicating human-like functions using potentiometers, fishing line, and custom-designed 3D printed components.
+                            Engineered a fully operational robotic hand using potentiometers, fishing line, and custom-designed 3D printed components.
                         </p>
                     </div>
                     <div class="flex flex-wrap gap-2 mt-6">
+                        <span class="tech-tag">3D Model</span>
                         <span class="tech-tag">SolidWorks</span>
                         <span class="tech-tag">Mechatronics</span>
-                        <span class="tech-tag">Prosthetics</span>
                         <span class="tech-tag">3D Printing</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Experience Section --><section id="experience" class="py-24 scroll-animation">
+        <!-- Experience Section -->
+        <section id="experience" class="py-24 scroll-animation">
             <h2 class="section-heading">Work Experience</h2>
             <div class="relative border-l-2 border-gray-700 ml-4">
-                 <!-- Experience Item 1 --><div class="mb-10 ml-8">
+                 <!-- Experience Item 1 -->
+                <div class="mb-10 ml-8">
                     <span class="absolute flex items-center justify-center w-8 h-8 bg-gray-800 rounded-full -left-4 ring-4 ring-gray-700">
                         <i data-lucide="volume-2" class="w-5 h-5 accent-color"></i>
                     </span>
@@ -273,7 +279,8 @@
                         <li>Design and implement efficient workflows for equipment setup and strike to improve operational efficiency.</li>
                     </ul>
                 </div>
-                <!-- Experience Item 2 --><div class="mb-10 ml-8">
+                <!-- Experience Item 2 -->
+                <div class="mb-10 ml-8">
                     <span class="absolute flex items-center justify-center w-8 h-8 bg-gray-800 rounded-full -left-4 ring-4 ring-gray-700">
                         <i data-lucide="users" class="w-5 h-5 accent-color"></i>
                     </span>
@@ -286,7 +293,8 @@
                         <li>Collaborate with the executive board to plan and execute club events.</li>
                     </ul>
                 </div>
-                 <!-- Experience Item 3 --><div class="mb-10 ml-8">
+                 <!-- Experience Item 3 -->
+                <div class="mb-10 ml-8">
                     <span class="absolute flex items-center justify-center w-8 h-8 bg-gray-800 rounded-full -left-4 ring-4 ring-gray-700">
                         <i data-lucide="theater" class="w-5 h-5 accent-color"></i>
                     </span>
@@ -302,10 +310,11 @@
             </div>
         </section>
 
-        <!-- Certifications & Awards Section --><section id="awards" class="py-24 scroll-animation">
+        <!-- Certifications & Awards Section -->
+        <section id="awards" class="py-24 scroll-animation">
             <h2 class="section-heading">Certifications</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Award 2 --><div class="glass-effect rounded-lg p-6 flex items-start gap-4">
+                <div class="glass-effect rounded-lg p-6 flex items-start gap-4">
                     <div class="flex-shrink-0 mt-1">
                         <i data-lucide="shield-check" class="w-10 h-10 accent-color"></i>
                     </div>
@@ -314,7 +323,7 @@
                         <p class="text-sm text-gray-400">AutoCAD</p>
                     </div>
                 </div>
-                <!-- Award 3 --><div class="glass-effect rounded-lg p-6 flex items-start gap-4">
+                 <div class="glass-effect rounded-lg p-6 flex items-start gap-4">
                     <div class="flex-shrink-0 mt-1">
                         <i data-lucide="shield-check" class="w-10 h-10 accent-color"></i>
                     </div>
@@ -323,7 +332,7 @@
                         <p class="text-sm text-gray-400">Autodesk Inc.</p>
                     </div>
                 </div>
-                 <!-- Award 4 --><div class="glass-effect rounded-lg p-6 flex items-start gap-4">
+                 <div class="glass-effect rounded-lg p-6 flex items-start gap-4">
                     <div class="flex-shrink-0 mt-1">
                         <i data-lucide="shield-check" class="w-10 h-10 accent-color"></i>
                     </div>
@@ -332,7 +341,7 @@
                         <p class="text-sm text-gray-400">UCF Environmental Health & Safety</p>
                     </div>
                 </div>
-                <!-- Award 5 --><div class="glass-effect rounded-lg p-6 flex items-start gap-4">
+                 <div class="glass-effect rounded-lg p-6 flex items-start gap-4">
                     <div class="flex-shrink-0 mt-1">
                         <i data-lucide="shield-check" class="w-10 h-10 accent-color"></i>
                     </div>
@@ -344,7 +353,8 @@
             </div>
         </section>
         
-        <!-- Resume Section --><section id="resume" class="py-24 scroll-animation">
+        <!-- Resume Section -->
+        <section id="resume" class="py-24 scroll-animation">
             <h2 class="section-heading">Resume</h2>
             <div class="max-w-4xl mx-auto text-center">
                 <div class="glass-effect rounded-lg p-4 mb-8 inline-block">
@@ -358,7 +368,8 @@
             </div>
         </section>
 
-        <!-- "In The Works" Section --><section id="in-the-works" class="py-24 scroll-animation">
+        <!-- "In The Works" Section -->
+        <section id="in-the-works" class="py-24 scroll-animation">
             <h2 class="section-heading">What I'm Working On</h2>
             <div class="glass-effect rounded-lg p-8 flex flex-col md:flex-row items-center gap-8">
                 <div class="flex-shrink-0">
@@ -373,7 +384,8 @@
             </div>
         </section>
         
-        <!-- Contact Section --><section id="contact" class="py-24 text-center scroll-animation">
+        <!-- Contact Section -->
+        <section id="contact" class="py-24 text-center scroll-animation">
             <h2 class="text-2xl font-semibold accent-color mb-2">What's Next?</h2>
             <h3 class="text-4xl md:text-5xl font-bold text-gray-50 mb-4">Get In Touch</h3>
             <p class="max-w-xl mx-auto text-gray-400 mb-8">
@@ -394,7 +406,8 @@
 
     </main>
 
-    <!-- Footer --><footer class="py-8 text-center text-gray-500">
+    <!-- Footer -->
+    <footer class="py-8 text-center text-gray-500">
          <div class="flex flex-col items-center justify-center space-y-2 mb-4">
             <a href="mailto:48calebsmith@gmail.com" class="hover:accent-color transition-colors">48calebsmith@gmail.com</a>
             <a href="tel:813-520-6992" class="hover:accent-color transition-colors">(813)-520-6992</a>
@@ -407,14 +420,16 @@
         <p>Designed & Built by Caleb Smith</p>
     </footer>
 
-    <!-- Project Modal --><div id="project-modal" class="modal-overlay hidden">
+    <!-- Project Modal -->
+    <div id="project-modal" class="modal-overlay hidden">
         <div class="modal-content w-11/12 max-w-4xl max-h-[90vh] bg-gray-800 rounded-lg shadow-xl overflow-y-auto p-8 relative">
             <button id="modal-close-btn" class="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors z-10">
                 <i data-lucide="x" class="w-8 h-8"></i>
             </button>
             <h2 id="modal-title" class="text-3xl font-bold text-white mb-4">Project Title</h2>
             <div id="modal-media-container" class="w-full h-64 md:h-96 bg-gray-900 rounded-lg mb-6">
-                <!-- Image or 3D viewer will be inserted here by JS --></div>
+                <!-- Image or 3D viewer will be inserted here by JS -->
+            </div>
             <div class="text-gray-300 space-y-6">
                 <div>
                     <h3 class="text-xl font-semibold text-gray-100 border-b border-gray-600 pb-2 mb-2">Description</h3>
@@ -434,22 +449,17 @@
     
     <script type="module">
         import { OrbitControls } from 'https://cdn.skypack.dev/three@0.128.0/examples/jsm/controls/OrbitControls.js';
+        import { OBJLoader } from 'https://cdn.skypack.dev/three@0.128.0/examples/jsm/loaders/OBJLoader.js';
+        import { MTLLoader } from 'https://cdn.skypack.dev/three@0.128.0/examples/jsm/loaders/MTLLoader.js';
 
         lucide.createIcons();
 
         // Mobile Menu Toggle
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-        
+        mobileMenuBtn.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
         document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', (e) => {
-                if(link.closest('#mobile-menu')) {
-                    mobileMenu.classList.add('hidden');
-                }
-            });
+            link.addEventListener('click', (e) => { if(link.closest('#mobile-menu')) { mobileMenu.classList.add('hidden'); } });
         });
 
         // Header scroll effect
@@ -459,13 +469,9 @@
             if (window.scrollY > 50) {
                 header.classList.add('py-2');
                 header.classList.remove('py-4');
-                if (lastScrollY < window.scrollY && !mobileMenu.classList.contains('hidden')) {
-                   // Do not hide if mobile menu is open
-                } else if (lastScrollY < window.scrollY) {
-                   header.style.transform = 'translateY(-100%)';
-                } else {
-                   header.style.transform = 'translateY(0)';
-                }
+                if (lastScrollY < window.scrollY && !mobileMenu.classList.contains('hidden')) { } 
+                else if (lastScrollY < window.scrollY) { header.style.transform = 'translateY(-100%)'; } 
+                else { header.style.transform = 'translateY(0)'; }
             } else {
                 header.classList.remove('py-2');
                 header.classList.add('py-4');
@@ -477,17 +483,11 @@
         // Scroll animations
         const animatedElements = document.querySelectorAll('.scroll-animation');
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, {
-            threshold: 0.1
-        });
+            entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); } });
+        }, { threshold: 0.1 });
         animatedElements.forEach(el => observer.observe(el));
         
-        // ---- Contact Form Logic ----
+        // Contact Form Logic
         const contactForm = document.getElementById('contact-form');
         const formFeedback = document.getElementById('form-feedback');
         contactForm.addEventListener('submit', function(e) {
@@ -501,15 +501,16 @@
         const projectDetails = {
             'orange-race': {
                 title: "Great Navel Orange Race",
-                mediaType: '3d', // Changed to '3d'
+                mediaType: '3d-boat',
                 description: "This was an extracurricular project at UCF to design and build a remote-controlled boat. My primary role involved designing the hull in SolidWorks and running fluid analysis simulations to ensure positive buoyancy and stability, even in rough water conditions.",
                 challenges: "The main challenge was integrating a functional gyroscope for stabilization within the tight constraints of the hull design. Ensuring the electronics were properly waterproofed while allowing for RC signal reception was also a critical hurdle.",
                 results: "Our team was the first out of 275 to successfully implement a functional gyroscope during the RC testing phase of the project. This innovation contributed to our boat's excellent stability and performance, helping us place within the top 10 of all competitors."
             },
             'robotic-hand': {
                 title: "Robotic Hand Competition",
-                mediaType: 'image',
-                mediaUrl: "https://placehold.co/600x400/1f2937/60a5fa?text=Robotic+Hand",
+                mediaType: '3d-hand',
+                objUrl: '/assets/robotic-hand.obj', // IMPORTANT: Use a relative path
+                mtlUrl: '/assets/robotic-hand.mtl', // IMPORTANT: Use a relative path
                 description: "For an ASME competition, I engineered a fully operational robotic hand using SolidWorks for design and 3D printing for manufacturing. The project focused on replicating the complex functions of a human hand through mechanical and electrical systems.",
                 challenges: "A key challenge was creating a control system that was both intuitive and precise. We used a system of potentiometers to act as 'tendons,' controlled by fishing line and rubber bands. Calibrating the tension and sensor sensitivity to achieve a firm but controlled grip was a complex process of trial and error.",
                 results: "The final product demonstrated proficiency in mechatronics, successfully integrating mechanical parts with electrical components to achieve successful object manipulation. The hand was able to pick up and manipulate a variety of objects, showcasing the effectiveness of the design."
@@ -522,29 +523,66 @@
         const mediaContainer = document.getElementById('modal-media-container');
 
         let threejs_scene, threejs_camera, threejs_renderer, threejs_controls, threejs_animationFrameId;
+        let cleanupThreeJSResize = null;
 
-        function initThreeJS(container) {
-            // Scene setup
+        // Generic 3D scene cleanup
+        function destroyThreeJS() {
+             if (threejs_animationFrameId) cancelAnimationFrame(threejs_animationFrameId);
+             if (threejs_renderer) threejs_renderer.dispose();
+             if (typeof cleanupThreeJSResize === 'function') {
+                cleanupThreeJSResize();
+                cleanupThreeJSResize = null;
+            }
+             threejs_scene = null;
+             threejs_camera = null;
+             threejs_renderer = null;
+             threejs_controls = null;
+             threejs_animationFrameId = null;
+        }
+
+        // --- 3D Scene Initializers ---
+        function setupCommon3DScene(container) {
             threejs_scene = new THREE.Scene();
             threejs_camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-            threejs_renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); // alpha: true for transparent bg
+            threejs_renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
             
             threejs_renderer.setSize(container.clientWidth, container.clientHeight);
             threejs_renderer.setPixelRatio(window.devicePixelRatio);
             container.appendChild(threejs_renderer.domElement);
 
-            // Controls
             threejs_controls = new OrbitControls(threejs_camera, threejs_renderer.domElement);
             threejs_controls.enableDamping = true;
             threejs_controls.autoRotate = true;
+
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+            threejs_scene.add(ambientLight);
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+            directionalLight.position.set(5, 10, 7.5);
+            threejs_scene.add(directionalLight);
+
+            threejs_camera.position.z = 3.5;
+
+            function animate() {
+                threejs_animationFrameId = requestAnimationFrame(animate);
+                threejs_controls.update();
+                threejs_renderer.render(threejs_scene, threejs_camera);
+            }
+            animate();
+
+            const onResize = () => {
+                threejs_camera.aspect = container.clientWidth / container.clientHeight;
+                threejs_camera.updateProjectionMatrix();
+                threejs_renderer.setSize(container.clientWidth, container.clientHeight);
+            };
+            window.addEventListener('resize', onResize);
+            cleanupThreeJSResize = () => window.removeEventListener('resize', onResize);
+        }
+
+        function initBoatScene(container) {
+            setupCommon3DScene(container);
             threejs_controls.autoRotateSpeed = 1.0;
 
-            // Create a stylized boat hull model
-            const material = new THREE.MeshStandardMaterial({ 
-                color: 0x60a5fa, // Accent color
-                metalness: 0.3,
-                roughness: 0.6
-            });
+            const material = new THREE.MeshStandardMaterial({ color: 0x60a5fa, metalness: 0.3, roughness: 0.6 });
             const hullShape = new THREE.Shape();
             hullShape.moveTo(0, 0);
             hullShape.lineTo(0, 0.8);
@@ -554,71 +592,36 @@
             hullShape.lineTo(4, 0);
             hullShape.lineTo(0, 0);
 
-            const extrudeSettings = {
-                steps: 2,
-                depth: 1.6,
-                bevelEnabled: true,
-                bevelThickness: 0.1,
-                bevelSize: 0.1,
-                bevelOffset: 0,
-                bevelSegments: 1
-            };
-
+            const extrudeSettings = { steps: 2, depth: 1.6, bevelEnabled: true, bevelThickness: 0.1, bevelSize: 0.1, bevelOffset: 0, bevelSegments: 1 };
             const geometry = new THREE.ExtrudeGeometry(hullShape, extrudeSettings);
-            geometry.center(); // Center the geometry for easier rotation
+            geometry.center();
             
             const hull = new THREE.Mesh(geometry, material);
-            hull.rotation.x = -Math.PI / 12; // Tilt it slightly
+            hull.rotation.x = -Math.PI / 12;
             threejs_scene.add(hull);
+        }
 
-            // Lighting
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-            threejs_scene.add(ambientLight);
-            const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-            directionalLight.position.set(5, 10, 7.5);
-            threejs_scene.add(directionalLight);
-
-            threejs_camera.position.z = 3.5;
-
-            // Animation loop
-            function animate() {
-                threejs_animationFrameId = requestAnimationFrame(animate);
-                threejs_controls.update();
-                threejs_renderer.render(threejs_scene, threejs_camera);
-            }
-            animate();
-
-            // Handle window resize
-            const onResize = () => {
-                threejs_camera.aspect = container.clientWidth / container.clientHeight;
-                threejs_camera.updateProjectionMatrix();
-                threejs_renderer.setSize(container.clientWidth, container.clientHeight);
-            };
-            window.addEventListener('resize', onResize);
+        function initHandScene(container, objUrl, mtlUrl) {
+            setupCommon3DScene(container);
+            threejs_controls.autoRotateSpeed = 0.8;
             
-            // Return cleanup function
-            return () => {
-                 window.removeEventListener('resize', onResize);
-            }
+            const mtlLoader = new MTLLoader();
+            mtlLoader.load(mtlUrl, (materials) => {
+                materials.preload();
+                const objLoader = new OBJLoader();
+                objLoader.setMaterials(materials);
+                objLoader.load(objUrl, (object) => {
+                    // Center and scale the model
+                    const box = new THREE.Box3().setFromObject(object);
+                    const center = box.getCenter(new THREE.Vector3());
+                    object.position.sub(center); // center the model
+                    object.scale.set(0.08, 0.08, 0.08); // Adjust scale as needed
+                    threejs_scene.add(object);
+                });
+            });
         }
         
-        function destroyThreeJS() {
-             if (threejs_animationFrameId) {
-                cancelAnimationFrame(threejs_animationFrameId);
-             }
-             if (threejs_renderer) {
-                threejs_renderer.dispose();
-             }
-             // Nullify all variables to help garbage collection
-             threejs_scene = null;
-             threejs_camera = null;
-             threejs_renderer = null;
-             threejs_controls = null;
-             threejs_animationFrameId = null;
-        }
-
-        let cleanupThreeJSResize = null;
-
+        // --- Modal Opening/Closing ---
         function openModal(projectId) {
             const details = projectDetails[projectId];
             if (!details) return;
@@ -628,16 +631,19 @@
             document.getElementById('modal-challenges').textContent = details.challenges;
             document.getElementById('modal-results').textContent = details.results;
             
-            mediaContainer.innerHTML = ''; // Clear previous content
+            mediaContainer.innerHTML = ''; 
 
-            if (details.mediaType === '3d') {
-                cleanupThreeJSResize = initThreeJS(mediaContainer);
-                const prompt = document.createElement('div');
-                prompt.className = 'three-d-prompt';
-                prompt.textContent = 'Click and drag to explore the model';
+            const prompt = document.createElement('div');
+            prompt.className = 'three-d-prompt';
+            prompt.textContent = 'Click and drag to explore the model';
+
+            if (details.mediaType === '3d-boat') {
+                initBoatScene(mediaContainer);
                 mediaContainer.appendChild(prompt);
-
-            } else {
+            } else if (details.mediaType === '3d-hand') {
+                initHandScene(mediaContainer, details.objUrl, details.mtlUrl);
+                mediaContainer.appendChild(prompt);
+            } else if (details.mediaType === 'image') {
                 const img = document.createElement('img');
                 img.src = details.mediaUrl;
                 img.alt = details.title;
@@ -652,11 +658,7 @@
 
         function closeModal() {
             projectModal.classList.remove('visible');
-            if (typeof cleanupThreeJSResize === 'function') {
-                cleanupThreeJSResize();
-                cleanupThreeJSResize = null;
-            }
-            destroyThreeJS(); // Clean up 3D scene if it exists
+            destroyThreeJS(); 
             setTimeout(() => {
                 projectModal.classList.add('hidden');
                 document.body.style.overflow = 'auto';
@@ -666,7 +668,6 @@
         projectCards.forEach(card => card.addEventListener('click', () => openModal(card.dataset.projectId)));
         modalCloseBtn.addEventListener('click', closeModal);
         projectModal.addEventListener('click', (e) => { if (e.target === projectModal) closeModal(); });
-
 
         // ---- Hero Canvas Animation ----
         const canvas = document.getElementById('hero-canvas');
@@ -680,67 +681,40 @@
             canvas.height = heroSection.offsetHeight;
         }
 
-        window.addEventListener('resize', () => {
-            setCanvasSize();
-            initParticles();
-        });
+        window.addEventListener('resize', () => { setCanvasSize(); initParticles(); });
         window.addEventListener('mousemove', (event) => {
             const rect = canvas.getBoundingClientRect();
             mouse.x = event.clientX - rect.left;
             mouse.y = event.clientY - rect.top;
         });
-        window.addEventListener('mouseout', () => {
-            mouse.x = null;
-            mouse.y = null;
-        });
+        window.addEventListener('mouseout', () => { mouse.x = null; mouse.y = null; });
 
         class Particle {
-            constructor(x, y, directionX, directionY, size, color) {
-                this.x = x;
-                this.y = y;
-                this.directionX = directionX;
-                this.directionY = directionY;
-                this.size = size;
-                this.color = color;
-            }
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-                ctx.fillStyle = this.color;
-                ctx.fill();
-            }
+            constructor(x, y, dX, dY, size, color) { this.x = x; this.y = y; this.directionX = dX; this.directionY = dY; this.size = size; this.color = color; }
+            draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false); ctx.fillStyle = this.color; ctx.fill(); }
             update() {
                 if (this.x > canvas.width || this.x < 0) this.directionX = -this.directionX;
                 if (this.y > canvas.height || this.y < 0) this.directionY = -this.directionY;
-                
-                // Mouse collision
-                let dx = mouse.x - this.x;
-                let dy = mouse.y - this.y;
-                let distance = Math.sqrt(dx * dx + dy * dy);
+                let dx = mouse.x - this.x; let dy = mouse.y - this.y; let distance = Math.sqrt(dx * dx + dy * dy);
                 if (distance < mouse.radius + this.size) {
                     if (mouse.x < this.x && this.x < canvas.width - this.size * 10) this.x += 5;
                     if (mouse.x > this.x && this.x > this.size * 10) this.x -= 5;
                     if (mouse.y < this.y && this.y < canvas.height - this.size * 10) this.y += 5;
                     if (mouse.y > this.y && this.y > this.size * 10) this.y -= 5;
                 }
-                
-                this.x += this.directionX;
-                this.y += this.directionY;
-                this.draw();
+                this.x += this.directionX; this.y += this.directionY; this.draw();
             }
         }
 
         function initParticles() {
             particles = [];
-            let numberOfParticles = (canvas.height * canvas.width) / 9000;
-            for (let i = 0; i < numberOfParticles; i++) {
+            let num = (canvas.height * canvas.width) / 9000;
+            for (let i = 0; i < num; i++) {
                 let size = (Math.random() * 2) + 1;
                 let x = (Math.random() * ((canvas.width - size * 2) - (size * 2)) + size * 2);
                 let y = (Math.random() * ((canvas.height - size * 2) - (size * 2)) + size * 2);
-                let directionX = (Math.random() * .4) - .2;
-                let directionY = (Math.random() * .4) - .2;
-                let color = 'rgba(96, 165, 250, 0.5)';
-                particles.push(new Particle(x, y, directionX, directionY, size, color));
+                let dX = (Math.random() * .4) - .2; let dY = (Math.random() * .4) - .2;
+                particles.push(new Particle(x, y, dX, dY, size, 'rgba(96, 165, 250, 0.5)'));
             }
         }
 
@@ -748,16 +722,12 @@
             let opacityValue = 1;
             for (let a = 0; a < particles.length; a++) {
                 for (let b = a; b < particles.length; b++) {
-                    let distance = ((particles[a].x - particles[b].x) * (particles[a].x - particles[b].x))
-                                 + ((particles[a].y - particles[b].y) * (particles[a].y - particles[b].y));
+                    let distance = ((particles[a].x - particles[b].x) * (particles[a].x - particles[b].x)) + ((particles[a].y - particles[b].y) * (particles[a].y - particles[b].y));
                     if (distance < (canvas.width / 7) * (canvas.height / 7)) {
                         opacityValue = 1 - (distance / 20000);
                         ctx.strokeStyle = `rgba(96, 165, 250, ${opacityValue})`;
                         ctx.lineWidth = 1;
-                        ctx.beginPath();
-                        ctx.moveTo(particles[a].x, particles[a].y);
-                        ctx.lineTo(particles[b].x, particles[b].y);
-                        ctx.stroke();
+                        ctx.beginPath(); ctx.moveTo(particles[a].x, particles[a].y); ctx.lineTo(particles[b].x, particles[b].y); ctx.stroke();
                     }
                 }
             }
@@ -766,21 +736,13 @@
         function animateParticles() {
             requestAnimationFrame(animateParticles);
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < particles.length; i++) {
-                particles[i].update();
-            }
+            for (let i = 0; i < particles.length; i++) { particles[i].update(); }
             connect();
         }
 
-        // Delay initialization to ensure layout is calculated
-        setTimeout(() => {
-            setCanvasSize();
-            initParticles();
-            animateParticles();
-        }, 100);
+        setTimeout(() => { setCanvasSize(); initParticles(); animateParticles(); }, 100);
 
     </script>
 </body>
 </html>
-
 
