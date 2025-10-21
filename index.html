@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +9,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -121,23 +122,79 @@
             height: 100%;
             border-radius: 0.5rem;
         }
-        .three-d-prompt {
+        
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            border-radius: 0.5rem;
+            background-color: #000; /* Black background for letterboxing */
+        }
+        .slider-track {
+            display: flex;
+            height: 100%;
+            transition: transform 0.3s ease-in-out;
+        }
+        .slider-item {
+            flex-shrink: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .slider-item video,
+        .slider-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Use 'contain' to see the whole media */
+        }
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.4);
+            color: white;
+            border-radius: 9999px;
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .slider-btn:hover {
+            background: rgba(0, 0, 0, 0.7);
+        }
+        .slider-btn.prev {
+            left: 1rem;
+        }
+        .slider-btn.next {
+            right: 1rem;
+        }
+        .slider-dots {
             position: absolute;
             bottom: 1rem;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(0,0,0,0.5);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            font-size: 0.875rem;
-            pointer-events: none;
+            display: flex;
+            gap: 0.5rem;
+            z-index: 10;
+        }
+        .slider-dot {
+            width: 0.75rem;
+            height: 0.75rem;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .slider-dot.active {
+            background: rgba(255, 255, 255, 1);
         }
     </style>
 </head>
 
 <body class="antialiased leading-relaxed">
-    <!-- Header -->
     <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 glass-effect shadow-md">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="#" class="text-2xl font-bold accent-color nav-logo">CS</a>
@@ -146,25 +203,21 @@
                 <a href="#gallery" class="nav-link hover:accent-color transition-colors duration-300">Gallery</a>
                 <a href="#experience" class="nav-link hover:accent-color transition-colors duration-300">Experience</a>
                 <a href="#resume" class="nav-link hover:accent-color transition-colors duration-300">Resume</a>
-                <a href="#contact" class="nav-link hover:accent-color transition-colors duration-300">Contact</a>
-            </div>
+                </div>
             <button id="mobile-menu-btn" class="md:hidden focus:outline-none">
-                <i data-lucide="menu" class="w-6 h-6"></i>
+                <i id="mobile-menu-icon" data-lucide="menu" class="w-6 h-6"></i>
             </button>
         </nav>
-        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
             <a href="#about" class="nav-link block py-2 hover:accent-color">About</a>
             <a href="#gallery" class="nav-link block py-2 hover:accent-color">Gallery</a>
             <a href="#experience" class="nav-link block py-2 hover:accent-color">Experience</a>
             <a href="#resume" class="nav-link block py-2 hover:accent-color">Resume</a>
-            <a href="#contact" class="nav-link block py-2 hover:accent-color">Contact</a>
-        </div>
+            </div>
     </header>
 
     <main class="container mx-auto px-6 lg:px-20 pt-24 md:pt-32">
 
-        <!-- Hero Section -->
         <section id="hero" class="min-h-[70vh] flex flex-col justify-center scroll-animation relative">
             <canvas id="hero-canvas"></canvas>
             <div class="hero-content">
@@ -182,7 +235,6 @@
             </div>
         </section>
         
-        <!-- About Section -->
         <section id="about" class="py-24 scroll-animation">
             <h2 class="section-heading">About Me</h2>
             <div class="grid grid-cols-1 md:grid-cols-5 gap-10">
@@ -216,11 +268,9 @@
             </div>
         </section>
 
-        <!-- Gallery Section -->
         <section id="gallery" class="py-24 scroll-animation">
             <h2 class="section-heading">Project Gallery</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Project 1 -->
                 <div class="glass-effect rounded-lg p-6 flex flex-col justify-between hover:-translate-y-2 transition-transform duration-300 cursor-pointer project-card" data-project-id="orange-race">
                     <div>
                         <div class="flex justify-between items-center mb-4">
@@ -239,78 +289,127 @@
                         <span class="tech-tag">Gyroscopes</span>
                     </div>
                 </div>
-                <!-- Project 2 -->
-                <div class="glass-effect rounded-lg p-6 flex flex-col justify-between hover:-translate-y-2 transition-transform duration-300 cursor-pointer project-card" data-project-id="robotic-hand">
+                <div class="glass-effect rounded-lg p-6 flex flex-col justify-between hover:-translate-y-2 transition-transform duration-300 cursor-pointer project-card" data-project-id="rc-car-launcher">
                     <div>
                          <div class="flex justify-between items-center mb-4">
-                            <i data-lucide="folder-git-2" class="w-10 h-10 accent-color"></i>
-                            <span class="text-xs text-gray-500">ASME</span>
+                            <i data-lucide="target" class="w-10 h-10 accent-color"></i> 
+                            <span class="text-xs text-gray-500">UCF</span>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-50 mb-2">Robotic Hand Competition</h3>
+                        <h3 class="text-xl font-bold text-gray-50 mb-2">Autonomous RC Car Launcher</h3> 
                         <p class="text-gray-400 text-sm">
-                            Engineered a fully operational robotic hand using potentiometers, fishing line, and custom-designed 3D printed components.
+                            Developed an autonomous, line-following RC car with a custom-built mechanism to launch a rubber duck into a target zone.
                         </p>
                     </div>
                     <div class="flex flex-wrap gap-2 mt-6">
-                        <span class="tech-tag">3D Model</span>
-                        <span class="tech-tag">SolidWorks</span>
+                        <span class="tech-tag">C</span>
+                        <span class="tech-tag">Autonomous</span>
+                        <span class="tech-tag">Sensors</span>
                         <span class="tech-tag">Mechatronics</span>
-                        <span class="tech-tag">3D Printing</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Experience Section -->
         <section id="experience" class="py-24 scroll-animation">
-            <h2 class="section-heading">Work Experience</h2>
+            <h2 class="section-heading">Work History & Transferable Experience</h2>
             <div class="relative border-l-2 border-gray-700 ml-4">
-                 <!-- Experience Item 1 -->
-                <div class="mb-10 ml-8">
-                    <span class="absolute flex items-center justify-center w-8 h-8 bg-gray-800 rounded-full -left-4 ring-4 ring-gray-700">
-                        <i data-lucide="volume-2" class="w-5 h-5 accent-color"></i>
-                    </span>
-                    <h3 class="text-xl font-semibold text-gray-50">LEAD Event Production Technician</h3>
-                    <p class="text-md font-medium accent-color">UCF Student Union</p>
-                    <time class="block mb-2 text-sm font-normal leading-none text-gray-500">March 2024 - Present</time>
-                    <ul class="list-disc list-inside text-gray-400 space-y-1">
-                        <li>Engineer and execute technical setups for live events, applying principles of systems and resource management.</li>
-                        <li>Train team members on diverse equipment including audio consoles, wireless cameras, and DMX lighting.</li>
-                        <li>Design and implement efficient workflows for equipment setup and strike to improve operational efficiency.</li>
-                    </ul>
-                </div>
-                <!-- Experience Item 2 -->
-                <div class="mb-10 ml-8">
+                 <div class="mb-10 ml-8">
                     <span class="absolute flex items-center justify-center w-8 h-8 bg-gray-800 rounded-full -left-4 ring-4 ring-gray-700">
                         <i data-lucide="users" class="w-5 h-5 accent-color"></i>
                     </span>
                     <h3 class="text-xl font-semibold text-gray-50">Social Media Manager</h3>
-                    <p class="text-md font-medium accent-color">ASME at UCF</p>
+                    <p class="text-md font-medium accent-color">American Society of Mechanical Engineers (ASME UCF)</p>
                     <time class="block mb-2 text-sm font-normal leading-none text-gray-500">May 2025 - Present</time>
                      <ul class="list-disc list-inside text-gray-400 space-y-1">
-                        <li>Spearhead marketing and communications initiatives for the university's ASME chapter.</li>
-                        <li>Design promotional content including digital flyers, videos, and posts.</li>
-                        <li>Collaborate with the executive board to plan and execute club events.</li>
+                        <li>Spearhead marketing and communications initiatives for the university's ASME chapter, strategically increasing member engagement and recruitment.</li>
+                        <li>Designed and produced promotional content, including digital flyers, videos, and posts, utilizing graphic design and videography skills to effectively communicate club activities and value.</li>
+                        <li>Collaborated with the committee and executive board to plan and execute club events, directly contributing to organizational growth and member involvement.</li>
                     </ul>
                 </div>
-                 <!-- Experience Item 3 -->
                 <div class="mb-10 ml-8">
+                    <span class="absolute flex items-center justify-center w-8 h-8 bg-gray-800 rounded-full -left-4 ring-4 ring-gray-700">
+                        <i data-lucide="shield-check" class="w-5 h-5 accent-color"></i>
+                    </span>
+                    <h3 class="text-xl font-semibold text-gray-50">Freelance Technician & Safety Lead</h3>
+                    <p class="text-md font-medium accent-color">Everclean Windows and Gutters LLC | Land O' Lakes, Florida</p>
+                    <time class="block mb-2 text-sm font-normal leading-none text-gray-500">June 2024 – August 2024</time>
+                    <ul class="list-disc list-inside text-gray-400 space-y-1">
+                        <li>Oversaw and enforced workplace safety protocols, ensuring 100% compliance with industry best practices and safe operation of equipment.</li>
+                        <li>Led the successful launch of a new pressure washing and gutter division, strategically expanding the company's service offerings and client base.</li>
+                        <li>Developed and delivered training for team members on efficient workflow management, proper equipment handling, and critical ladder and rooftop safety.</li>
+                    </ul>
+                </div>
+                 <div class="mb-10 ml-8">
+                    <span class="absolute flex items-center justify-center w-8 h-8 bg-gray-800 rounded-full -left-4 ring-4 ring-gray-700">
+                        <i data-lucide="volume-2" class="w-5 h-5 accent-color"></i>
+                    </span>
+                    <h3 class="text-xl font-semibold text-gray-50">LEAD Event Production Technician</h3>
+                    <p class="text-md font-medium accent-color">UCF Student Union (Orlando, Florida)</p>
+                    <time class="block mb-2 text-sm font-normal leading-none text-gray-500">March 2024 - Present</time>
+                    <ul class="list-disc list-inside text-gray-400 space-y-1">
+                        <li>Engineer and execute technical setups for live events, applying principles of systems and resource management.</li>
+                        <li>Integrated and provided guidance and training to all team members on diverse equipment (e.g., audio consoles, wireless remote cameras, DMX lighting) into cohesive operational systems, ensuring seamless show delivery.</li>
+                        <li>Develops expertise in troubleshooting and problem-solving to ensure uninterrupted performance during events.</li>
+                        <li>Designs efficient workflows for equipment setup and strike, improving operational efficiency for each event.</li>
+                        <li>Optimizes equipment placement and cable routing to improve operational safety and efficiency during event setup and strike.</li>
+                        <li>Collaborates with developing and delivering a comprehensive training curriculum covering technical operations, including equipment identification, equipment connectivity, and client relations.</li>
+                    </ul>
+                </div>
+                <div class="mb-10 ml-8">
+                    <span class="absolute flex items-center justify-center w-8 h-8 bg-gray-800 rounded-full -left-4 ring-4 ring-gray-700">
+                        <i data-lucide="masks" class="w-5 h-5 accent-color"></i>
+                    </span>
+                    <h3 class="text-xl font-semibold text-gray-50">Theatrical Actor (Technical Role)</h3>
+                    <p class="text-md font-medium accent-color">Land O' Lakes High School Production of Little Shop of Horrors</p>
+                    <time class="block mb-2 text-sm font-normal leading-none text-gray-500">August 2022 – February 2023</time>
+                    <ul class="list-disc list-inside text-gray-400 space-y-1">
+                        <li>Rapidly acquired a technical performance skillset (acting, singing, dancing) with no prior experience to portray a principal role requiring a specialized accent and aged movement.</li>
+                        <li>Demonstrated high personal discipline and commitment to master complex performance requirements and deliver a convincing, detailed on-stage character.</li>
+                        <li>Collaborated effectively with a large cast and crew.</li>
+                    </ul>
+                </div>
+                 <div class="mb-10 ml-8">
                     <span class="absolute flex items-center justify-center w-8 h-8 bg-gray-800 rounded-full -left-4 ring-4 ring-gray-700">
                         <i data-lucide="theater" class="w-5 h-5 accent-color"></i>
                     </span>
                     <h3 class="text-xl font-semibold text-gray-50">Stage Manager</h3>
-                    <p class="text-md font-medium accent-color">Studio@620</p>
+                    <p class="text-md font-medium accent-color">Studio@620 (St. Petersburg, Florida)</p>
                     <time class="block mb-2 text-sm font-normal leading-none text-gray-500">March 2022 - July 2022</time>
                      <ul class="list-disc list-inside text-gray-400 space-y-1">
-                        <li>Managed and troubleshot technical show operations, including audio and lighting systems.</li>
-                        <li>Engineered and controlled dynamic lighting systems to meet artistic requirements.</li>
-                        <li>Directed a crew of 4 stagehands, coordinating time-sensitive scene transitions.</li>
+                        <li>Managed and troubleshot technical show operations, including audio and lighting systems, to ensure seamless performance execution.</li>
+                        <li>Engineered and controlled dynamic lighting systems to meet specific artistic and atmospheric requirements for each scene.</li>
+                        <li>Directed a crew of 4 stagehands, applying principles of project management to coordinate time-sensitive scene transitions and prop placement.</li>
+                    </ul>
+                </div>
+                <div class="mb-10 ml-8">
+                    <span class="absolute flex items-center justify-center w-8 h-8 bg-gray-800 rounded-full -left-4 ring-4 ring-gray-700">
+                        <i data-lucide="book-user" class="w-5 h-5 accent-color"></i>
+                    </span>
+                    <h3 class="text-xl font-semibold text-gray-50">Co-Teacher (Aftercare & Volunteer)</h3>
+                    <p class="text-md font-medium accent-color">Grace Family Church | Lutz, Florida</p>
+                    <time class="block mb-2 text-sm font-normal leading-none text-gray-500">August 2021 – May 2023 (Paid) | 2017 – 2023 (Volunteer)</time>
+                    <ul class="list-disc list-inside text-gray-400 space-y-1">
+                        <li>Managed and mentored groups of up to 15 elementary-aged students, ensuring proper conduct and an engaging learning environment.</li>
+                        <li>Developed and executed instructional activities (e.g., worksheets, games, questionnaires) to reinforce complex curriculum and assess knowledge retention.</li>
+                        <li>Demonstrated strong leadership and communication skills by teaching and translating core concepts to diverse age groups.</li>
+                    </ul>
+                </div>
+                <div class="mb-10 ml-8">
+                    <span class="absolute flex items-center justify-center w-8 h-8 bg-gray-800 rounded-full -left-4 ring-4 ring-gray-700">
+                        <i data-lucide="audio-lines" class="w-5 h-5 accent-color"></i>
+                    </span>
+                    <h3 class="text-xl font-semibold text-gray-50">Sound Operator (Theatrical Production)</h3>
+                    <p class="text-md font-medium accent-color">Land O' Lakes High School Musical Department</p>
+                    <time class="block mb-2 text-sm font-normal leading-none text-gray-500">August 2021 – May 2022</time>
+                    <ul class="list-disc list-inside text-gray-400 space-y-1">
+                        <li>Managed and executed complex audio cues for live theatrical performances, controlling up to 11 individual microphones with critical timing (often within a half-second window).</li>
+                        <li>Engineered comprehensive cue sheets and coordinated with the lighting and prop departments to ensure perfect synchronization across all technical elements of the show.</li>
+                        <li>Demonstrated extreme attention to detail and the ability to perform under high-pressure, live-event conditions.</li>
                     </ul>
                 </div>
             </div>
         </section>
 
-        <!-- Certifications & Awards Section -->
         <section id="awards" class="py-24 scroll-animation">
             <h2 class="section-heading">Certifications</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -353,83 +452,56 @@
             </div>
         </section>
         
-        <!-- Resume Section -->
         <section id="resume" class="py-24 scroll-animation">
             <h2 class="section-heading">Resume</h2>
             <div class="max-w-4xl mx-auto text-center">
                 <div class="glass-effect rounded-lg p-4 mb-8 inline-block">
-                     <img src="https://raw.githubusercontent.com/CalebS48/caleb-smith-website/main/assets/Caleb_Smith_Resume-1.png" alt="Caleb Smith's Resume" class="rounded-md shadow-lg w-full">
+                     <img src="https://res.cloudinary.com/dffo9kuhp/image/upload/v1761071101/Untitled_document-1-1_nlja1d.png" alt="Caleb Smith's Resume" class="rounded-md shadow-lg w-full">
                 </div>
                 <br>
-                <a href="https://raw.githubusercontent.com/CalebS48/caleb-smith-website/main/assets/Caleb%20Smith%20Resume.docx.pdf" download class="accent-bg text-white font-bold py-3 px-10 rounded-md hover:bg-opacity-90 transition-all duration-300 text-lg inline-flex items-center gap-2">
+                <a href="https://raw.githubusercontent.com/CalebS48/caleb-smith-website/main/assets/CalebSmithUCFResume.pdf" download="CalebSmithUCFResume.pdf" class="accent-bg text-white font-bold py-3 px-10 rounded-md hover:bg-opacity-90 transition-all duration-300 text-lg inline-flex items-center gap-2">
                     <i data-lucide="download" class="w-5 h-5"></i>
                     Download PDF
                 </a>
             </div>
         </section>
 
-        <!-- "In The Works" Section -->
         <section id="in-the-works" class="py-24 scroll-animation">
             <h2 class="section-heading">What I'm Working On</h2>
             <div class="glass-effect rounded-lg p-8 flex flex-col md:flex-row items-center gap-8">
                 <div class="flex-shrink-0">
-                    <i data-lucide="flask-conical" class="w-24 h-24 text-blue-400"></i>
+                    <i data-lucide="layout" class="w-24 h-24 text-blue-400"></i>
                 </div>
                 <div>
-                    <h3 class="text-2xl font-bold text-gray-50 mb-2">AI-Powered Material Simulation</h3>
+                    <h3 class="text-2xl font-bold text-gray-50 mb-2">This site!</h3>
                     <p class="text-gray-400">
-                        Currently developing a Python-based simulation tool that uses machine learning to predict the performance of novel composite materials under stress. This project aims to accelerate the R&D cycle for creating stronger, lighter, and more sustainable materials for aerospace and automotive applications.
+                        I'm currently developing this portfolio as an interactive extension of my resume. My goal is to use this platform to provide deeper insight into my projects, skills, and personal journey in a way that a static document can't.
                     </p>
                 </div>
             </div>
         </section>
         
-        <!-- Contact Section -->
-        <section id="contact" class="py-24 text-center scroll-animation">
-            <h2 class="text-2xl font-semibold accent-color mb-2">What's Next?</h2>
-            <h3 class="text-4xl md:text-5xl font-bold text-gray-50 mb-4">Get In Touch</h3>
-            <p class="max-w-xl mx-auto text-gray-400 mb-8">
-                I'm currently seeking new opportunities and am open to discussing exciting projects or potential roles. Feel free to send me a message!
-            </p>
-            <form id="contact-form" class="max-w-xl mx-auto">
-                <div id="form-feedback" class="mb-4 text-lg accent-color font-semibold"></div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <input type="text" name="name" placeholder="Your Name" required class="w-full bg-gray-700 border border-gray-600 rounded-md py-3 px-4 text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <input type="email" name="email" placeholder="Your Email" required class="w-full bg-gray-700 border border-gray-600 rounded-md py-3 px-4 text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                </div>
-                <textarea name="message" placeholder="Your Message" rows="5" required class="w-full bg-gray-700 border border-gray-600 rounded-md py-3 px-4 text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"></textarea>
-                <button type="submit" class="accent-bg text-white font-bold py-3 px-10 rounded-md hover:bg-opacity-90 transition-all duration-300 text-lg">
-                    Send Message
-                </button>
-            </form>
-        </section>
+        </main>
 
-    </main>
-
-    <!-- Footer -->
-    <footer class="py-8 text-center text-gray-500">
+    <footer id="contact" class="pt-16 pb-8 text-center text-gray-500">
          <div class="flex flex-col items-center justify-center space-y-2 mb-4">
-            <a href="mailto:48calebsmith@gmail.com" class="hover:accent-color transition-colors">48calebsmith@gmail.com</a>
-            <a href="tel:813-520-6992" class="hover:accent-color transition-colors">(813)-520-6992</a>
+            <a href="mailto:48calebsmith@gmail.com" class="text-lg hover:accent-color transition-colors">48calebsmith@gmail.com</a>
+            <a href="tel:813-520-6992" class="text-lg hover:accent-color transition-colors">(813)-520-6992</a>
         </div>
         <div class="flex justify-center space-x-6 mb-4">
-            <a href="#" class="hover:accent-color transition-colors"><i data-lucide="github" class="w-6 h-6"></i></a>
-            <a href="#" class="hover:accent-color transition-colors"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
-            <a href="#" class="hover:accent-color transition-colors"><i data-lucide="twitter" class="w-6 h-6"></i></a>
+            <a href="https://www.linkedin.com/in/caleb-smith-11770b299/" target="_blank" rel="noopener noreferrer" class="hover:accent-color transition-colors"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
         </div>
         <p>Designed & Built by Caleb Smith</p>
     </footer>
 
-    <!-- Project Modal -->
     <div id="project-modal" class="modal-overlay hidden">
-        <div class="modal-content w-11/12 max-w-4xl max-h-[90vh] bg-gray-800 rounded-lg shadow-xl overflow-y-auto p-8 relative">
+        <div class="modal-content w-11/12 max-w-4xl max-h-[90vh] bg-gray-800 rounded-lg shadow-xl overflow-y-auto p-4 md:p-8 relative">
             <button id="modal-close-btn" class="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors z-10">
                 <i data-lucide="x" class="w-8 h-8"></i>
             </button>
             <h2 id="modal-title" class="text-3xl font-bold text-white mb-4">Project Title</h2>
             <div id="modal-media-container" class="w-full h-64 md:h-96 bg-gray-900 rounded-lg mb-6">
-                <!-- Image or 3D viewer will be inserted here by JS -->
-            </div>
+                </div>
             <div class="text-gray-300 space-y-6">
                 <div>
                     <h3 class="text-xl font-semibold text-gray-100 border-b border-gray-600 pb-2 mb-2">Description</h3>
@@ -448,18 +520,39 @@
     </div>
     
     <script type="module">
-        import { OrbitControls } from 'https://cdn.skypack.dev/three@0.128.0/examples/jsm/controls/OrbitControls.js';
-        import { OBJLoader } from 'https://cdn.skypack.dev/three@0.128.0/examples/jsm/loaders/OBJLoader.js';
-        import { MTLLoader } from 'https://cdn.skypack.dev/three@0.128.0/examples/jsm/loaders/MTLLoader.js';
-
         lucide.createIcons();
 
-        // Mobile Menu Toggle
+        // Mobile Menu Toggle with Icon Swap
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
-        mobileMenuBtn.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
+        const mobileMenuIcon = document.getElementById('mobile-menu-icon'); 
+
+        mobileMenuBtn.addEventListener('click', () => {
+            const isHidden = mobileMenu.classList.toggle('hidden');
+            mobileMenuIcon.setAttribute('data-lucide', isHidden ? 'menu' : 'x');
+            lucide.createIcons(); 
+        });
+
+        // UPDATED: Removed contact link from mobile menu click logic
         document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', (e) => { if(link.closest('#mobile-menu')) { mobileMenu.classList.add('hidden'); } });
+            link.addEventListener('click', (e) => {
+                // Smooth scroll for anchor links
+                const targetId = link.getAttribute('href');
+                if (targetId.startsWith('#')) {
+                    e.preventDefault();
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+                
+                // Close mobile menu if open
+                if (link.closest('#mobile-menu')) {
+                    mobileMenu.classList.add('hidden');
+                    mobileMenuIcon.setAttribute('data-lucide', 'menu');
+                    lucide.createIcons();
+                }
+            });
         });
 
         // Header scroll effect
@@ -469,9 +562,11 @@
             if (window.scrollY > 50) {
                 header.classList.add('py-2');
                 header.classList.remove('py-4');
-                if (lastScrollY < window.scrollY && !mobileMenu.classList.contains('hidden')) { } 
-                else if (lastScrollY < window.scrollY) { header.style.transform = 'translateY(-100%)'; } 
-                else { header.style.transform = 'translateY(0)'; }
+                if (lastScrollY < window.scrollY && mobileMenu.classList.contains('hidden')) {
+                    header.style.transform = 'translateY(-100%)';
+                } else {
+                    header.style.transform = 'translateY(0)';
+                }
             } else {
                 header.classList.remove('py-2');
                 header.classList.add('py-4');
@@ -487,33 +582,33 @@
         }, { threshold: 0.1 });
         animatedElements.forEach(el => observer.observe(el));
         
-        // Contact Form Logic
-        const contactForm = document.getElementById('contact-form');
-        const formFeedback = document.getElementById('form-feedback');
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            formFeedback.textContent = "Thank you! Your message has been sent.";
-            contactForm.reset();
-            setTimeout(() => formFeedback.textContent = "", 4000);
-        });
+        // REMOVED: Contact Form Logic
 
         // ---- Project Modal Logic ----
         const projectDetails = {
             'orange-race': {
                 title: "Great Navel Orange Race",
-                mediaType: '3d-boat',
+                mediaType: 'gallery',
+                media: [ 
+                    { type: 'video', url: 'https://res.cloudinary.com/dffo9kuhp/video/upload/v1761071617/IMG_8790_eq7bjs.mov' },
+                    { type: 'video', url: 'https://res.cloudinary.com/dffo9kuhp/video/upload/v1761071625/IMG_7559_qaehla.mov' }
+                ],
                 description: "This was an extracurricular project at UCF to design and build a remote-controlled boat. My primary role involved designing the hull in SolidWorks and running fluid analysis simulations to ensure positive buoyancy and stability, even in rough water conditions.",
                 challenges: "The main challenge was integrating a functional gyroscope for stabilization within the tight constraints of the hull design. Ensuring the electronics were properly waterproofed while allowing for RC signal reception was also a critical hurdle.",
                 results: "Our team was the first out of 275 to successfully implement a functional gyroscope during the RC testing phase of the project. This innovation contributed to our boat's excellent stability and performance, helping us place within the top 10 of all competitors."
             },
-            'robotic-hand': {
-                title: "Robotic Hand Competition",
-                mediaType: '3d-hand',
-                objUrl: 'https://raw.githubusercontent.com/CalebS48/caleb-smith-website/main/assets/robotic-hand.obj',
-                mtlUrl: 'https://raw.githubusercontent.com/CalebS48/caleb-smith-website/main/assets/robotic-hand.mtl',
-                description: "For an ASME competition, I engineered a fully operational robotic hand using SolidWorks for design and 3D printing for manufacturing. The project focused on replicating the complex functions of a human hand through mechanical and electrical systems.",
-                challenges: "A key challenge was creating a control system that was both intuitive and precise. We used a system of potentiometers to act as 'tendons,' controlled by fishing line and rubber bands. Calibrating the tension and sensor sensitivity to achieve a firm but controlled grip was a complex process of trial and error.",
-                results: "The final product demonstrated proficiency in mechatronics, successfully integrating mechanical parts with electrical components to achieve successful object manipulation. The hand was able to pick up and manipulate a variety of objects, showcasing the effectiveness of the design."
+            'rc-car-launcher': { 
+                title: "Autonomous RC Car Launcher",
+                mediaType: 'gallery',
+                media: [
+                    { type: 'video', url: 'https://res.cloudinary.com/dffo9kuhp/video/upload/v1761071957/IMG_8889_enw95q.mov' },
+                    // FIX: Changed .heic to .jpg
+                    { type: 'image', url: 'https://res.cloudinary.com/dffo9kuhp/image/upload/v1761071935/IMG_5385_seojiw.jpg' },
+                    { type: 'image', url: 'https://res.cloudinary.com/dffo9kuhp/image/upload/v1761071963/IMG_8891_eychyq.jpg' }
+                ],
+                description: "Using a pre-built cart, our team designed and fabricated a compartment to house a launching mechanism. The primary objective was to launch a rubber duck into a target zone.",
+                challenges: "The robot had to be coded in C to be fully autonomous, using sensors to follow a specific black line. We had to strategically balance points, deciding to accept penalties for hitting objects to guarantee a higher-scoring shot in the central target ring, as this yielded a significant net point gain.",
+                results: "Our strategic decision paid off. The autonomous system successfully navigated the course and prioritized the high-value target, resulting in a top-performing score despite the minor penalties for contact."
             }
         };
 
@@ -522,123 +617,84 @@
         const projectCards = document.querySelectorAll('.project-card');
         const mediaContainer = document.getElementById('modal-media-container');
 
-        let threejs_scene, threejs_camera, threejs_renderer, threejs_controls, threejs_animationFrameId;
-        let cleanupThreeJSResize = null;
+        // --- Media Slider Logic ---
+        let currentSlideIndex = 0;
+        let sliderTrack = null;
+        let dots = [];
 
-        // Generic 3D scene cleanup
-        function destroyThreeJS() {
-             if (threejs_animationFrameId) cancelAnimationFrame(threejs_animationFrameId);
-             if (threejs_renderer) threejs_renderer.dispose();
-             if (typeof cleanupThreeJSResize === 'function') {
-                cleanupThreeJSResize();
-                cleanupThreeJSResize = null;
+        function showSlide(index, mediaCount) {
+            if (!sliderTrack) return;
+            currentSlideIndex = (index + mediaCount) % mediaCount; // Wrap around
+            sliderTrack.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentSlideIndex);
+            });
+        }
+        
+        function createMediaSlider(container, mediaItems) {
+            container.innerHTML = ''; // Clear container
+            currentSlideIndex = 0;
+            dots = [];
+
+            const sliderContainer = document.createElement('div');
+            sliderContainer.className = 'slider-container';
+
+            sliderTrack = document.createElement('div');
+            sliderTrack.className = 'slider-track';
+
+            const dotsContainer = document.createElement('div');
+            dotsContainer.className = 'slider-dots';
+
+            mediaItems.forEach((item, index) => {
+                const slide = document.createElement('div');
+                slide.className = 'slider-item';
+
+                if (item.type === 'video') {
+                    const video = document.createElement('video');
+                    video.src = item.url;
+                    video.controls = true;
+                    video.playsInline = true;
+                    video.loop = true;
+                    video.muted = true; 
+                    slide.appendChild(video);
+                } else if (item.type === 'image') {
+                    const img = document.createElement('img');
+                    img.src = item.url;
+                    img.alt = "Project media";
+                    slide.appendChild(img);
+                }
+                sliderTrack.appendChild(slide);
+
+                // Create dot
+                const dot = document.createElement('div');
+                dot.className = 'slider-dot';
+                dot.addEventListener('click', () => showSlide(index, mediaItems.length));
+                dotsContainer.appendChild(dot);
+                dots.push(dot);
+            });
+
+            sliderContainer.appendChild(sliderTrack);
+
+            // Add Prev/Next buttons if more than one item
+            if (mediaItems.length > 1) {
+                const prevBtn = document.createElement('button');
+                prevBtn.className = 'slider-btn prev';
+                prevBtn.innerHTML = '<i data-lucide="chevron-left" class="w-6 h-6"></i>';
+                prevBtn.addEventListener('click', () => showSlide(currentSlideIndex - 1, mediaItems.length));
+                sliderContainer.appendChild(prevBtn);
+
+                const nextBtn = document.createElement('button');
+                nextBtn.className = 'slider-btn next';
+                nextBtn.innerHTML = '<i data-lucide="chevron-right" class="w-6 h-6"></i>';
+                nextBtn.addEventListener('click', () => showSlide(currentSlideIndex + 1, mediaItems.length));
+                sliderContainer.appendChild(nextBtn);
+
+                sliderContainer.appendChild(dotsContainer);
+                dots[0].classList.add('active');
             }
-             threejs_scene = null;
-             threejs_camera = null;
-             threejs_renderer = null;
-             threejs_controls = null;
-             threejs_animationFrameId = null;
-        }
 
-        // --- 3D Scene Initializers ---
-        function setupCommon3DScene(container) {
-            threejs_scene = new THREE.Scene();
-            threejs_camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-            threejs_renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-            
-            threejs_renderer.setSize(container.clientWidth, container.clientHeight);
-            threejs_renderer.setPixelRatio(window.devicePixelRatio);
-            container.appendChild(threejs_renderer.domElement);
-
-            threejs_controls = new OrbitControls(threejs_camera, threejs_renderer.domElement);
-            threejs_controls.enableDamping = true;
-            threejs_controls.autoRotate = true;
-
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
-            threejs_scene.add(ambientLight);
-            const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-            directionalLight.position.set(5, 10, 7.5);
-            threejs_scene.add(directionalLight);
-
-            threejs_camera.position.z = 3.5;
-
-            function animate() {
-                threejs_animationFrameId = requestAnimationFrame(animate);
-                threejs_controls.update();
-                threejs_renderer.render(threejs_scene, threejs_camera);
-            }
-            animate();
-
-            const onResize = () => {
-                threejs_camera.aspect = container.clientWidth / container.clientHeight;
-                threejs_camera.updateProjectionMatrix();
-                threejs_renderer.setSize(container.clientWidth, container.clientHeight);
-            };
-            window.addEventListener('resize', onResize);
-            cleanupThreeJSResize = () => window.removeEventListener('resize', onResize);
-        }
-
-        function initBoatScene(container) {
-            setupCommon3DScene(container);
-            threejs_controls.autoRotateSpeed = 1.0;
-
-            const material = new THREE.MeshStandardMaterial({ color: 0x60a5fa, metalness: 0.3, roughness: 0.6 });
-            const hullShape = new THREE.Shape();
-            hullShape.moveTo(0, 0);
-            hullShape.lineTo(0, 0.8);
-            hullShape.lineTo(1, 1);
-            hullShape.lineTo(3, 1);
-            hullShape.lineTo(4, 0.8);
-            hullShape.lineTo(4, 0);
-            hullShape.lineTo(0, 0);
-
-            const extrudeSettings = { steps: 2, depth: 1.6, bevelEnabled: true, bevelThickness: 0.1, bevelSize: 0.1, bevelOffset: 0, bevelSegments: 1 };
-            const geometry = new THREE.ExtrudeGeometry(hullShape, extrudeSettings);
-            geometry.center();
-            
-            const hull = new THREE.Mesh(geometry, material);
-            hull.rotation.x = -Math.PI / 12;
-            threejs_scene.add(hull);
-        }
-
-        function initHandScene(container, objUrl, mtlUrl) {
-            setupCommon3DScene(container);
-            threejs_controls.autoRotateSpeed = 0.8;
-            
-            const mtlLoader = new MTLLoader();
-            mtlLoader.load(mtlUrl, (materials) => {
-                materials.preload();
-                const objLoader = new OBJLoader();
-                objLoader.setMaterials(materials);
-                objLoader.load(objUrl, (object) => {
-                    const box = new THREE.Box3().setFromObject(object);
-                    const size = box.getSize(new THREE.Vector3()).length();
-                    const center = box.getCenter(new THREE.Vector3());
-                    
-                    object.position.x += (object.position.x - center.x);
-                    object.position.y += (object.position.y - center.y);
-                    object.position.z += (object.position.z - center.z);
-                    
-                    threejs_controls.maxDistance = size * 10;
-                    threejs_camera.near = size / 100;
-                    threejs_camera.far = size * 100;
-                    threejs_camera.updateProjectionMatrix();
-                    
-                    threejs_camera.position.copy(center);
-                    threejs_camera.position.x += size / 2.0;
-                    threejs_camera.position.y += size / 5.0;
-                    threejs_camera.position.z += size / 2.0;
-                    threejs_camera.lookAt(center);
-
-                    threejs_scene.add(object);
-                },
-                (xhr) => { console.log((xhr.loaded / xhr.total * 100) + '% loaded'); },
-                (error) => { console.error('An error happened while loading the OBJ model:', error); }
-                );
-            },
-            (xhr) => { console.log((xhr.loaded / xhr.total * 100) + '% loaded'); },
-            (error) => { console.error('An error happened while loading the MTL file:', error); }
-            );
+            container.appendChild(sliderContainer);
+            lucide.createIcons(); // Render new chevrons
         }
         
         // --- Modal Opening/Closing ---
@@ -651,18 +707,10 @@
             document.getElementById('modal-challenges').textContent = details.challenges;
             document.getElementById('modal-results').textContent = details.results;
             
-            mediaContainer.innerHTML = ''; 
+            mediaContainer.innerHTML = ''; // Clear old content
 
-            const prompt = document.createElement('div');
-            prompt.className = 'three-d-prompt';
-            prompt.textContent = 'Click and drag to explore the model';
-
-            if (details.mediaType === '3d-boat') {
-                initBoatScene(mediaContainer);
-                mediaContainer.appendChild(prompt);
-            } else if (details.mediaType === '3d-hand') {
-                initHandScene(mediaContainer, details.objUrl, details.mtlUrl);
-                mediaContainer.appendChild(prompt);
+            if (details.mediaType === 'gallery') {
+                createMediaSlider(mediaContainer, details.media);
             } else if (details.mediaType === 'image') {
                 const img = document.createElement('img');
                 img.src = details.mediaUrl;
@@ -673,15 +721,17 @@
 
             projectModal.classList.remove('hidden');
             setTimeout(() => projectModal.classList.add('visible'), 10); 
-            document.body.style.overflow = 'hidden';
+            document.body.style.overflow = 'hidden'; 
         }
 
         function closeModal() {
             projectModal.classList.remove('visible');
-            destroyThreeJS(); 
+            mediaContainer.innerHTML = ''; // Stop videos from playing
+            sliderTrack = null; 
+            dots = [];
             setTimeout(() => {
                 projectModal.classList.add('hidden');
-                document.body.style.overflow = 'auto';
+                document.body.style.overflow = 'auto'; 
             }, 300);
         }
 
@@ -702,12 +752,33 @@
         }
 
         window.addEventListener('resize', () => { setCanvasSize(); initParticles(); });
-        window.addEventListener('mousemove', (event) => {
+
+        function handleMove(event) {
             const rect = canvas.getBoundingClientRect();
-            mouse.x = event.clientX - rect.left;
-            mouse.y = event.clientY - rect.top;
-        });
-        window.addEventListener('mouseout', () => { mouse.x = null; mouse.y = null; });
+            let x, y;
+            if (event.touches) {
+                if (event.touches.length === 0) return;
+                x = event.touches[0].clientX - rect.left;
+                y = event.touches[0].clientY - rect.top;
+            } else {
+                x = event.clientX - rect.left;
+                y = event.clientY - rect.top;
+            }
+            mouse.x = x;
+            mouse.y = y;
+        }
+
+        function handleOut() {
+            mouse.x = null;
+            mouse.y = null;
+        }
+
+        window.addEventListener('mousemove', handleMove);
+        window.addEventListener('mouseout', handleOut);
+        
+        window.addEventListener('touchstart', handleMove, { passive: true });
+        window.addEventListener('touchmove', handleMove, { passive: true });
+        window.addEventListener('touchend', handleOut);
 
         class Particle {
             constructor(x, y, dX, dY, size, color) { this.x = x; this.y = y; this.directionX = dX; this.directionY = dY; this.size = size; this.color = color; }
@@ -717,10 +788,10 @@
                 if (this.y > canvas.height || this.y < 0) this.directionY = -this.directionY;
                 let dx = mouse.x - this.x; let dy = mouse.y - this.y; let distance = Math.sqrt(dx * dx + dy * dy);
                 if (distance < mouse.radius + this.size) {
-                    if (mouse.x < this.x && this.x < canvas.width - this.size * 10) this.x += 5;
-                    if (mouse.x > this.x && this.x > this.size * 10) this.x -= 5;
-                    if (mouse.y < this.y && this.y < canvas.height - this.size * 10) this.y += 5;
-                    if (mouse.y > this.y && this.y > this.size * 10) this.y -= 5;
+                    if (mouse.x < this.x && this.x < canvas.width - this.size * 10) this.x += 3;
+                    if (mouse.x > this.x && this.x > this.size * 10) this.x -= 3;
+                    if (mouse.y < this.y && this.y < canvas.height - this.size * 10) this.y += 3;
+                    if (mouse.y > this.y && this.y > this.size * 10) this.y -= 3;
                 }
                 this.x += this.directionX; this.y += this.directionY; this.draw();
             }
@@ -728,7 +799,7 @@
 
         function initParticles() {
             particles = [];
-            let num = (canvas.height * canvas.width) / 9000;
+            let num = Math.max(40, Math.min(150, (canvas.width * canvas.height) / 12000));
             for (let i = 0; i < num; i++) {
                 let size = (Math.random() * 2) + 1;
                 let x = (Math.random() * ((canvas.width - size * 2) - (size * 2)) + size * 2);
@@ -739,15 +810,20 @@
         }
 
         function connect() {
+            let maxDistSq = 120 * 120; 
             let opacityValue = 1;
             for (let a = 0; a < particles.length; a++) {
                 for (let b = a; b < particles.length; b++) {
-                    let distance = ((particles[a].x - particles[b].x) * (particles[a].x - particles[b].x)) + ((particles[a].y - particles[b].y) * (particles[a].y - particles[b].y));
-                    if (distance < (canvas.width / 7) * (canvas.height / 7)) {
-                        opacityValue = 1 - (distance / 20000);
+                    let distanceSq = ((particles[a].x - particles[b].x) * (particles[a].x - particles[b].x)) + ((particles[a].y - particles[b].y) * (particles[a].y - particles[b].y));
+                    
+                    if (distanceSq < maxDistSq) {
+                        opacityValue = 1 - (distanceSq / maxDistSq); 
                         ctx.strokeStyle = `rgba(96, 165, 250, ${opacityValue})`;
                         ctx.lineWidth = 1;
-                        ctx.beginPath(); ctx.moveTo(particles[a].x, particles[a].y); ctx.lineTo(particles[b].x, particles[b].y); ctx.stroke();
+                        ctx.beginPath();
+                        ctx.moveTo(particles[a].x, particles[a].y);
+                        ctx.lineTo(particles[b].x, particles[b].y);
+                        ctx.stroke();
                     }
                 }
             }
@@ -765,4 +841,3 @@
     </script>
 </body>
 </html>
-
